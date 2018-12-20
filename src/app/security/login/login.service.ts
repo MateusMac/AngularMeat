@@ -26,6 +26,11 @@ export class LoginService {
         return this.http.post<User>(`${MEAT_API}/login`, { email: email, password: password }).do(user => this.user = user)
     }
 
+    logout() {
+
+        this.user = undefined
+    }
+
     handleLogin(path?: string) {
 
         this.router.navigate(['/login', btoa(path)])
