@@ -5,19 +5,19 @@ import { apiConfig } from './api-config';
 export const handleAuthorization = (req: Request, resp: Response, next) => {
     const token = extractToken(req)
 
-    if(!token) {
+    if (!token) {
 
         resp.setHeader('WWW-Authenticate', 'Bearer token_type="JWT"')
-        resp.status(401).json({nessage: 'Você precisa se autenticar.'})
+        resp.status(401).json({ nessage: 'Você precisa se autenticar.' })
     } else {
 
         jwt.verify(token, apiConfig.secret, (error, decoded) => {
-            if(decoded) {
+            if (decoded) {
 
                 next()
             } else {
 
-                resp.status(403).json({message: 'Não autorizado.'})
+                resp.status(403).json({ message: 'Não autorizado.' })
             }
         })
     }
@@ -25,17 +25,17 @@ export const handleAuthorization = (req: Request, resp: Response, next) => {
 
 function extractToken(req: Request): string {
 
-    let token = undefined
+    let token = undefined;
 
-    if(req.headers && req.headers.authorization) {
+    if (req.headers && req.headers.authorization) {
 
         const parts: string[] = req.headers.authorization.split(' ')
-        
-        if(parts.length === 2 && parts[0] === 'Bearer') {
+
+        if (parts.length === 2 && parts[0] === 'Bearer') {
 
             token = parts[1]
         }
     }
 
-    return token
+    return token;
 }
