@@ -7,14 +7,13 @@ var User = /** @class */ (function () {
         this.password = password;
     }
     User.prototype.matches = function (another) {
-        return another !== undefined &&
-            another.email === this.email &&
-            another.password === this.password;
+        return another !== undefined && another.email === this.email && another.password === this.password;
     };
     return User;
 }());
 exports.User = User;
 exports.users = {
     "juliana@gmail.com": new User('juliana@gmail.com', 'Juliana', 'juliana23'),
-    "amanda@gmail.com": new User('amanda@gmail.com', 'Amanda', 'amanda21')
+    "amanda@gmail.com": new User('amanda@gmail.com', 'Amanda', 'amanda21'),
+    "mateus@gmail.com": new User('mateus@gmail.com', 'Mateus', 'mateus97')
 };
