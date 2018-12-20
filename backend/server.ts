@@ -12,7 +12,7 @@ const middlewares = jsonServer.defaults()
 server.use(middlewares)
 server.use(jsonServer.bodyParser)
 server.post('/login', , (req, resp) => {
-    resp.json({ message: 'ok' })
+    resp.json({ message: 'okk' })
 })
 //server.use('/orders', handleAuthorization)
 //server.use(router)
