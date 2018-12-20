@@ -3,7 +3,7 @@ import * as jwt from "jsonwebtoken";
 import { apiConfig } from './api-config';
 
 export const handleAuthorization = (req: Request, resp: Response, next) => {
-    
+
     const token = extractToken(req)
 
     if (!token) {
@@ -26,7 +26,7 @@ export const handleAuthorization = (req: Request, resp: Response, next) => {
 
 function extractToken(req: Request): string {
 
-    let token = undefined;
+    let token = undefined
 
     if (req.headers && req.headers.authorization) {
 
@@ -37,6 +37,5 @@ function extractToken(req: Request): string {
             token = parts[1]
         }
     }
-
-    return token;
+    return token
 }

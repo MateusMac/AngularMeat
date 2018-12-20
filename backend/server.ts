@@ -11,11 +11,9 @@ const middlewares = jsonServer.defaults()
 
 server.use(middlewares)
 server.use(jsonServer.bodyParser)
-server.post('/login', (req, resp) => {
-    resp.json({ message: 'okk' })
-})
-//server.use('/orders', handleAuthorization)
-//server.use(router)
+server.post('/login', handleAuthentication)
+server.use('/orders', handleAuthorization)
+server.use(router)
 
 const options = {
     cert: fs.readFileSync('./backend/keys/cert.pem'),
