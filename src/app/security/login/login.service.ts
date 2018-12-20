@@ -11,7 +11,10 @@ export class LoginService {
 
     user: User
 
-    constructor(private http: HttpClient, private router: Router) { }
+    constructor(private http: HttpClient, private router: Router) {
+
+        this.router.events.subscribe(e => console.log(e))
+    }
 
     isLoggedIn(): boolean {
 
@@ -21,6 +24,11 @@ export class LoginService {
     login(email: string, password: string): Observable<User> {
 
         return this.http.post<User>(`${MEAT_API}/login`, { email: email, password: password }).do(user => this.user = user)
+    }
+
+    logout() {
+
+        this.user = undefined
     }
 
     handleLogin(path?: string) {
