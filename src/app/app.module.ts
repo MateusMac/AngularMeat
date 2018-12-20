@@ -42,9 +42,9 @@ import { LoginComponent } from './security/login/login.component';
     HttpClientModule,
     BrowserAnimationsModule,
     SharedModule.forRoute(),
-    RouterModule.forRoot(ROUTES, {preloadingStrategy: PreloadAllModules})
+    RouterModule.forRoot(ROUTES, { preloadingStrategy: PreloadAllModules })
   ],
-  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, {provide: LOCALE_ID, useValue: 'pt-BR'}],
+  providers: [{ provide: LOCALE_ID, useValue: 'pt-BR' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
