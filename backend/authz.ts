@@ -3,6 +3,7 @@ import * as jwt from "jsonwebtoken";
 import { apiConfig } from './api-config';
 
 export const handleAuthorization = (req: Request, resp: Response, next) => {
+    
     const token = extractToken(req)
 
     if (!token) {
