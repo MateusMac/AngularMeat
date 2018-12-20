@@ -11,7 +11,10 @@ export class LoginService {
 
     user: User
 
-    constructor(private http: HttpClient, private router: Router) { }
+    constructor(private http: HttpClient, private router: Router) {
+
+        this.router.events.subscribe(e => console.log(e))
+    }
 
     isLoggedIn(): boolean {
 
