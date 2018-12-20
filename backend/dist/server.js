@@ -6,13 +6,24 @@ var https = require("https");
 var server = jsonServer.create();
 var router = jsonServer.router('db.json');
 var middlewares = jsonServer.defaults();
+// Set default middlewares (logger, static, cors and no-cache)
 server.use(middlewares);
+// To handle POST, PUT and PATCH you need to use a body-parser
+// You can use the one used by JSON Server
 server.use(jsonServer.bodyParser);
+<<<<<<< HEAD
 server.post('/login', function (req, resp) {
     resp.json({ message: 'okk' });
 });
 //server.use('/orders', handleAuthorization)
 //server.use(router)
+=======
+//middleware para login
+server.post('/login', auth_1.handleAuthentication);
+server.use('/orders', authz_1.handleAuthorization);
+// Use default router
+server.use(router);
+>>>>>>> f524a558624c9cf7168a043704343a2c2141ea53
 var options = {
     cert: fs.readFileSync('./backend/keys/cert.pem'),
     key: fs.readFileSync('./backend/keys/key.pem')

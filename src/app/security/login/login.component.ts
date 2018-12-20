@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { LoginService } from './login.service';
-import { User } from './user.model';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { LoginService } from './login.service'
 
 @Component({
   selector: 'mt-login',
