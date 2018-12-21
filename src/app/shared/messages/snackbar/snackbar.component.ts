@@ -38,9 +38,9 @@ export class SnackbarComponent implements OnInit {
 
     this.notificationService.notifier
       .do(message => {
-       this.message = message
-       this.snackVisibility = 'visible'
-    }).switchMap(message => Observable.timer(3000))
+        this.message = message
+        this.snackVisibility = 'visible'
+      }).switchMap(message => Observable.timer(3000))
       .subscribe(timer => this.snackVisibility = 'hidden')
   }
 
