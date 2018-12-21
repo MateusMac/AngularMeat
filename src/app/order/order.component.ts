@@ -14,6 +14,7 @@ export class OrderComponent implements OnInit {
 
   orderForm: FormGroup
   delivery: number = 8
+  orderId: string
 
   emailPattern = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
   numberPattern = /^[0-9]*$/
@@ -21,8 +22,8 @@ export class OrderComponent implements OnInit {
   paymentOptions: RadioOption[] = [
 
     { label: 'Dinheiro', value: 'MON' },
-    { label: 'Cartão de Débito', value: 'DEB'},
-    { label: 'Cartão Referição', value: 'CRE'}
+    { label: 'Cartão de Débito', value: 'DEB' },
+    { label: 'Cartão Referição', value: 'CRE' }
   ]
 
   constructor(private orderService: OrderService, private router: Router, private formBuilder: FormBuilder) { }
@@ -38,22 +39,22 @@ export class OrderComponent implements OnInit {
       number: this.formBuilder.control('', [Validators.required, Validators.pattern(this.numberPattern)]),
       optionalAdress: this.formBuilder.control(''),
       paymentOption: this.formBuilder.control('', [Validators.required])
-    }, {validator: OrderComponent.equalsTo})
+    }, { validator: OrderComponent.equalsTo })
   }
 
-  static equalsTo(group: AbstractControl): {[key: string]: boolean} {
+  static equalsTo(group: AbstractControl): { [key: string]: boolean } {
 
     const email = group.get('email')
     const emailConfirmation = group.get('emailConfirmation')
-    
-    if(!email || !emailConfirmation) {
+
+    if (!email || !emailConfirmation) {
 
       return undefined
     }
 
-    if(email.value !== emailConfirmation.value) {
+    if (email.value !== emailConfirmation.value) {
 
-      return {emailsNotMatch: true}
+      return { emailsNotMatch: true }
     }
   }
 
@@ -82,12 +83,17 @@ export class OrderComponent implements OnInit {
     this.orderService.remove(item)
   }
 
+  isOrderCompleted(): boolean {
+
+    return this.orderId !== undefined
+  }
+
   checkOrder(order: Order) {
 
     order.orderItems = this.cartItems().map((item: CartItem) => new OrderItem(item.quantity, item.menuItem.id))
-    this.orderService.checkOrder(order).subscribe((orderId: string) => { 
-    this.router.navigate(['/order-summary'])
-    this.orderService.clear()
-  })
+    this.orderService.checkOrder(order).do((orderId: string) => { this.orderId = orderId }).subscribe((orderId: string) => {
+      this.router.navigate(['/order-summary'])
+      this.orderService.clear()
+    })
   }
 }
