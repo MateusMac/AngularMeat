@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ShoppingCartService } from './shopping-cart.service';
 import { trigger, state, transition, animate, keyframes, style } from '@angular/animations';
+import { NotificationService } from 'app/shared/messages/notification.service';
 
 @Component({
   selector: 'mt-shopping-cart',
@@ -26,7 +27,7 @@ export class ShoppingCartComponent implements OnInit {
 
   rowState = 'ready'
 
-  constructor(private shoppingCartService: ShoppingCartService) { }
+  constructor(private shoppingCartService: ShoppingCartService, private ns: NotificationService) { }
 
   ngOnInit() { }
 
@@ -43,6 +44,7 @@ export class ShoppingCartComponent implements OnInit {
   clear() {
 
     this.shoppingCartService.clear()
+    this.ns.notify(`Carrinho limpo`)
   }
 
   removeItem(item: any) {
