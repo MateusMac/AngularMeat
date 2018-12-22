@@ -17,7 +17,7 @@ export class OrderComponent implements OnInit {
   delivery: number = 8
   orderId: string
 
-  emailPattern = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+  //emailPattern = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
   numberPattern = /^[0-9]*$/
 
   paymentOptions: RadioOption[] = [
@@ -34,13 +34,13 @@ export class OrderComponent implements OnInit {
     this.orderForm = new FormGroup({
 
       name: new FormControl('', { validators: [Validators.required, Validators.minLength(5)] }),
-      email: new FormControl('', { validators: [Validators.required, Validators.pattern(this.emailPattern)] }),
-      emailConfirmation: new FormControl('', { validators: [Validators.required, Validators.pattern(this.emailPattern)] }),
+      email: new FormControl('', { validators: [Validators.required, Validators.email] }),
+      emailConfirmation: new FormControl('', { validators: [Validators.required, Validators.email] }),
       adress: new FormControl('', { validators: [Validators.required, Validators.minLength(5)] }),
       number: new FormControl('', { validators: [Validators.required, Validators.pattern(this.numberPattern)] }),
       optionalAdress: new FormControl(''),
       paymentOption: new FormControl('', { validators: [Validators.required] })
-    }, { validators: [OrderComponent.equalsTo], updateOn: 'blur' })
+    }, { validators: [OrderComponent.equalsTo], updateOn: 'change' })
   }
 
   static equalsTo(group: AbstractControl): { [key: string]: boolean } {
@@ -92,7 +92,9 @@ export class OrderComponent implements OnInit {
   checkOrder(order: Order) {
 
     order.orderItems = this.cartItems().map((item: CartItem) => new OrderItem(item.quantity, item.menuItem.id))
+
     this.orderService.checkOrder(order).pipe(tap((orderId: string) => { this.orderId = orderId })).subscribe((orderId: string) => {
+
       this.router.navigate(['/order-summary'])
       this.orderService.clear()
     })
