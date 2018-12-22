@@ -1,11 +1,10 @@
 import * as jsonServer from 'json-server';
 import * as fs from 'fs';
 import * as https from 'https';
-import { Express } from 'express';
 import { handleAuthentication } from './auth';
 import { handleAuthorization } from './authz';
 
-const server: Express = jsonServer.create()
+const server = jsonServer.create()
 const router = jsonServer.router('db.json')
 const middlewares = jsonServer.defaults()
 
